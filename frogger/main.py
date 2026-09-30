@@ -1,8 +1,7 @@
 """
-Frogger (Lab Starter)
+Frogger
 
-Run with:  python3 main.py
-
+Run with: python main.py
 Controls: Arrow keys to hop, R to restart.
 """
 
@@ -18,7 +17,6 @@ def main():
     pygame.display.set_caption("Frogger")
     clock = pygame.time.Clock()
     font = pygame.font.SysFont("consolas", 20)
-
     engine = GameEngine()
     running = True
     while running:
@@ -30,7 +28,6 @@ def main():
 
         engine.update()
         engine.draw(screen, font)
-
         pygame.display.flip()
         clock.tick(60)
 

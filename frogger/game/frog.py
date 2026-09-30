@@ -13,7 +13,7 @@ class Frog:
         self.start_col = start_col
         self.start_row = start_row
         self.cols = cols
-        self.start_row_limit = start_row_limit  # frog can't move below its own starting row
+        self.start_row_limit = start_row_limit
 
     def move(self, dcol, drow):
         new_col = self.col + dcol

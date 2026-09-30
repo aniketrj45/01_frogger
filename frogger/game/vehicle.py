@@ -12,7 +12,7 @@ class Vehicle:
         self.row = row
         self.width = width
         self.height = height
-        self.speed = speed   # px/frame, negative = moving left
+        self.speed = speed
 
     def update(self, road_width_px):
         self.x += self.speed

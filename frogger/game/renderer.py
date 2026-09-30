@@ -7,15 +7,12 @@ import pygame
 CELL_SIZE = 50
 GRID_COLS = 12
 GRID_ROWS = 8
-
 WIDTH = CELL_SIZE * GRID_COLS
 HEIGHT = CELL_SIZE * GRID_ROWS
 WINDOW_SIZE = (WIDTH, HEIGHT)
-
 GOAL_ROW = 0
-ROAD_ROWS = list(range(1, GRID_ROWS - 1))   # rows 1..6
-START_ROW = GRID_ROWS - 1                     # row 7
-
+ROAD_ROWS = list(range(1, GRID_ROWS - 1))
+START_ROW = GRID_ROWS - 1
 COLOR_BG = (20, 20, 25)
 COLOR_GOAL = (40, 130, 60)
 COLOR_ROAD = (45, 45, 50)
@@ -28,7 +25,6 @@ COLOR_TEXT = (255, 255, 255)
 
 def draw_scene(surface, frog, vehicles):
     surface.fill(COLOR_BG)
-
     for row in range(GRID_ROWS):
         rect = pygame.Rect(0, row * CELL_SIZE, WIDTH, CELL_SIZE)
         if row == GOAL_ROW:
@@ -38,10 +34,8 @@ def draw_scene(surface, frog, vehicles):
         else:
             pygame.draw.rect(surface, COLOR_ROAD, rect)
             pygame.draw.line(surface, COLOR_LANE_LINE, (0, row * CELL_SIZE), (WIDTH, row * CELL_SIZE), 1)
-
     for v in vehicles:
         pygame.draw.rect(surface, COLOR_VEHICLE, v.get_rect(CELL_SIZE), border_radius=6)
-
     pygame.draw.rect(surface, COLOR_FROG, frog.get_rect(CELL_SIZE), border_radius=8)
 
 

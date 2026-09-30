@@ -1,0 +1,57 @@
+*** Begin Patch
+*** Update File: game/game_engine.py
+@@
+ LANE_SPEEDS = [1.5, -2, 2, -2.5, 1.5, -2]   # one entry per road row, alternating direction
++STARTING_LIVES = 3
++HIT_DELAY_FRAMES = 30
+@@
+ class GameEngine:
+     def __init__(self):
++        self.lives = STARTING_LIVES
++        self.hit_timer = 0
+         self._build_entities()
+@@
+     def handle_keydown(self, key):
++        if key == pygame.K_r:
++            self.lives = STARTING_LIVES
++            self.hit_timer = 0
++            self._build_entities()
++            return
++
++        if self.lives <= 0 or self.hit_timer > 0:
++            return
++
+         if key == pygame.K_UP:
+             self.frog.move(0, -1)
+@@
+-        elif key == pygame.K_r:
+-            self._build_entities()
+ 
+     def update(self):
++        if self.lives <= 0:
++            return
++
+         for v in self.vehicles:
+             v.update(road_width_px=WIDTH)
++
++        if self.hit_timer > 0:
++            self.hit_timer -= 1
++            if self.hit_timer == 0:
++                self.frog.reset()
++            return
++
+         if check_collision(self.frog, self.vehicles):
+-            self.frog.reset()
++            self.lives -= 1
++            self.hit_timer = HIT_DELAY_FRAMES
++            return
+@@
+     def draw(self, surface, font):
+         from game import renderer
+         renderer.draw_scene(surface, self.frog, self.vehicles)
++        renderer.draw_text(surface, font, f"Lives: {self.lives}", (10, 10))
++        if self.lives <= 0:
++            renderer.draw_banner(surface, font, "Game Over")
++        elif self.hit_timer > 0:
++            renderer.draw_banner(surface, font, "HIT!")
+         renderer.draw_text(surface, font, "Arrow keys to move. R to restart.", (10, HEIGHT - 24))
